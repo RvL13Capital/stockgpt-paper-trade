@@ -21,18 +21,22 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Set API keys from Streamlit secrets or environment
-if 'TWELVEDATA_API_KEY' in st.secrets:
-    os.environ['TWELVEDATA_API_KEY'] = st.secrets['TWELVEDATA_API_KEY']
-    os.environ['ALPHA_VANTAGE_API_KEY'] = st.secrets['ALPHA_VANTAGE_API_KEY']
-    os.environ['FMP_API_KEY'] = st.secrets['FMP_API_KEY']
-    os.environ['FINNHUB_API_KEY'] = st.secrets['FINNHUB_API_KEY']
-else:
-    # Fallback to hardcoded (for demo only - use secrets in production!)
-    os.environ['TWELVEDATA_API_KEY'] = '5361b6392f4941d99f08d14d22551cb2'
-    os.environ['ALPHA_VANTAGE_API_KEY'] = 'FPG7DCR33BFK2HDP'
-    os.environ['FMP_API_KEY'] = 'smkqs1APQJVN2JuJAxSDkEvk7tDdTdZm'
-    os.environ['FINNHUB_API_KEY'] = 'd2f75n1r01qj3egrhu7gd2f75n1r01qj3egrhu80'
+# Set API keys from Streamlit secrets, environment variables, or fallback
+try:
+    # Try Streamlit secrets first (for Streamlit Cloud)
+    if 'TWELVEDATA_API_KEY' in st.secrets:
+        os.environ['TWELVEDATA_API_KEY'] = st.secrets['TWELVEDATA_API_KEY']
+        os.environ['ALPHA_VANTAGE_API_KEY'] = st.secrets['ALPHA_VANTAGE_API_KEY']
+        os.environ['FMP_API_KEY'] = st.secrets['FMP_API_KEY']
+        os.environ['FINNHUB_API_KEY'] = st.secrets['FINNHUB_API_KEY']
+except:
+    # If secrets.toml doesn't exist, environment variables from Render/Railway/Heroku are already available
+    # Only set fallback if environment variables are not set
+    if 'TWELVEDATA_API_KEY' not in os.environ:
+        os.environ['TWELVEDATA_API_KEY'] = '5361b6392f4941d99f08d14d22551cb2'
+        os.environ['ALPHA_VANTAGE_API_KEY'] = 'FPG7DCR33BFK2HDP'
+        os.environ['FMP_API_KEY'] = 'smkqs1APQJVN2JuJAxSDkEvk7tDdTdZm'
+        os.environ['FINNHUB_API_KEY'] = 'd2f75n1r01qj3egrhu7gd2f75n1r01qj3egrhu80'
 
 
 # Cache data fetching to minimize API calls
