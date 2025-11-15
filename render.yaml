@@ -1,0 +1,26 @@
+# Render.com Deployment Configuration
+# Deploy for free with automatic builds from GitHub
+
+services:
+  - type: web
+    name: stockgpt-analyzer
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run streamlit_app.py --server.port $PORT --server.address 0.0.0.0
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: STREAMLIT_SERVER_HEADLESS
+        value: true
+      - key: STREAMLIT_SERVER_PORT
+        value: 10000
+      # Add your API keys as environment variables in Render dashboard
+      # - key: TWELVEDATA_API_KEY
+      #   sync: false
+      # - key: ALPHA_VANTAGE_API_KEY
+      #   sync: false
+      # - key: FMP_API_KEY
+      #   sync: false
+      # - key: FINNHUB_API_KEY
+      #   sync: false
