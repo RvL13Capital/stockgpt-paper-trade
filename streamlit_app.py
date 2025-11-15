@@ -406,7 +406,7 @@ def main():
                 st.metric("Volatility", f"{features.get('volatility_20d', 0):.2f}%")
 
             with col4:
-                st.metric("Volume Ratio", f"{features.get('volume_ratio', 0):.2fx")
+                st.metric("Volume Ratio", f"{features.get('volume_ratio', 0):.2f}x")
                 st.metric("20D Change", f"{features.get('price_change_20d', 0):.2f}%")
 
             # Display chart
